@@ -1,0 +1,20 @@
+language: php
+php:
+- 5.5
+env:
+  global:
+    secure: "HfTzBWWSfzfVrodZXMqUggIVkBx23yC7GlqEk42NrTzLmdpE0lw1L1zWyR5WiLBUZaCP/fqII+ehmpH3MEehZOv/eCQAw9sfqz9ktLI9nHlPELy7l7TBe3wP9Zx+vUDSr+S3VyM1zL+lVwYCqpfC9d29whZLopje6p5h8vv1lJNQ65yro5ev0xG5fAuUnXeywD12ECTn/Kn2rcg3wNJgJw3jfc3xqVKIXnox0KONUL12p+LNQbPgN5O/l7T/8G2hh450gYcS9cK/eNHJbGF30SG86VAW1mGczeLM7mKhH6/4IMn8aGbBAo35QJJ+PXmG25+as+jaYXyqdyzE+Z60nptDnwaf/k5/0gjaohVBzejdrhiC+w/IS14rLF8bFAZeidnW3twjcvI99oB+Pyv4iZtswDnWR2CuQGLK6QkjLbmOxAuzHdvV604Hm7xWMAr1CjZOArrG3rJRgNt0+4vP77D3SxSgcB8aVANWi34G+vNOfi2mSJ+hZMngprihPkF+l2SLtidojd/QzZ127AU7mdAt3vbN0d/hVQ3Z7z/pPMcCMYM9hzNhL0N75ACyo/mrVAMN8Rib9+HZecIptlhmNp6Mdt1YUVtX3B2mdgV5Ut6GgV2jw5NbGiBjJuts3esTi7CQI2N0K6sfo7aoiisk8x1aQz+gJXrZZVgNpgoTlaA="
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+- java -jar selenium-server-standalone-2.46.0.jar > /tmp/selenium.log 2> /tmp/selenium.error
+  &
+before_script:
+- composer self-update
+- composer install
+script:
+- "./vendor/bin/phpunit webtest"
+notifications:
+  slack:
+    secure: k13E8kFaUjeRBC15PGKB8lTPwGetJoK34bp3cu7dFSl1ViaNk5BiSc//VXKIyFjmxImaUiM1Lx7dhhXXR7ZSdA2eQlXzM9Rc/r/q9H6JFzh30Cn5WVGekS5PUjPvoEh6oDlNzsZ1KgMjQ5pzR61asfyeZ7zVtEe+zYHDRpbBfClOjsQHSLGjvlyLynd69wzOxap+QEr3hQ58e9rdgbyRtDU8Krj/m752QmXN7ydigQhOA3YX7OpAhg5zrcssR0EkzStpEHKuDyCqCPpF2/mH6V8959x1olgFSh/7Gh264wZjOLr8auJEQk+VHNCVJGaQ/pHctkk9zV9gXdWqwUoYKHQSI1JOsG5s3ezASqYrwanLKdY8KhAxn/Jck9a2m5M4BBqZcCKuvSAscZlrXXEd/1Opzd9NGl0NOpM/MGl94bOCQuaM1hCsdtQjCt9IqDQntFCyigh5+Zye27U6buL6GlEvIRWBQAGZ3DfOq/ENEvqBXY7xlQFXpHtIuFJ3xg/NCdRpW7JBxM4nMZJOLdYQdOqleTQt+DizzJ6yuZ7UfXSeqs0k3XlGYkBeYcSRmfOb/z727d3Bhh0tlT358BXPbh7VZtLMpdlwRxmlCuqX+Z66Lus1VyErBZxK7vdMX9KvzrDqQudjqON4v4ll9K0rUGznmrGmtft25bEGDO+rJDg=
